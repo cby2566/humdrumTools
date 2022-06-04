@@ -1,2 +1,5 @@
 build/
 node_modules/
+successDir.json
+tankDir.json
+translatedGroupFalse.json
