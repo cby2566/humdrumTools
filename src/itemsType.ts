@@ -1,3 +1,4 @@
+// 定义接口
 export interface successItem {
   dirUrl: string;
   fileSize: number;

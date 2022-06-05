@@ -2,10 +2,17 @@ import * as fsPromises from "fs/promises";
 import { baseItem, successItem } from "./itemsType";
 import tool from "./index";
 const path = require("path");
+/**
+ * 用于处理且已经处理 以作者为单位的漫画
+ * 并梳理目录层级、使用方法剔除未汉化
+ * 辅助手动删除，并溯源返回
+ */
+
 const translated = [
   "汉化",
   "漢化",
   "翻訳",
+  "翻譯",
   "扫图",
   "掃圖",
   "自扫",
@@ -24,6 +31,7 @@ const translated = [
   "组",
   "工房",
   "pixiv",
+  "Pixiv"
 ];
 interface authorType {
   [index: string]: number;
@@ -76,7 +84,7 @@ class HandleTempFile extends tool {
         return 1;
       }
     });
-    console.log(authorTranslatedList.length);
+    console.log('含有未汉化作者数', authorTranslatedList.length);
     console.log(authorTranslatedList);
     // 导出未汉化的本子
     this.writeFileJson(
@@ -148,6 +156,12 @@ class HandleTempFile extends tool {
     console.log("提升完成");
   }
 }
+
+/**
+ * 用于梳理菊姬的 作者归档
+ * 挑出未汉化的，手动辨别之后，返回舱
+ * 
+ */
 
 // 读取(查汉化) 2
 const h1 = new HandleTempFile("./successDir.json");
