@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    *{
+      /* pointer-events: none; */
+    }
+    body, html{
+      scroll-behavior: smooth;
+
+    }
+    .bg {
+      /* 瀑布流的列数 */
+      column-count: 4;
+      /* 每列的间距 */
+      column-gap: 10px;
+      /* 滚动平滑、不知道提升的几分 */
+      scroll-behavior: smooth;
+
+    }
+
+    .imgBox {
+      text-align: center;
+      margin: 10px 0;
+    }
+
+    .imgBox img {
+      width: 22vw;
+      display: inline-block;
+      background: antiquewhite;
+      min-height: 100px;
+      /* 缩放图片像素化,加快渲染 */
+      /* -ms-interpolation-mode: nearest-neighbor;
+      image-rendering: pixelated; */
+      /* 缩放图片 边缘锐化 */
+      image-rendering: -webkit-optimize-contrast;
+      image-rendering: crisp-edges;
+      
+    }
+    .bg .imgBox img{
+      border: 4px solid red;
+    }
+    .bg-success .imgBox img{
+      border: 4px solid  aquamarine;
+    }
+  </style>
+  <script src="./successImg.js"></script>
+</head>
+
+<body>
+  <div class="bg"></div>
+</body>
+<script>
+  var bg = document.querySelector(".bg");
+  var waitEle = []
+  for (let i = 0; i < successImg.length; i++) {
+    let item = successImg[i]
+    let imgBox = document.createElement('div');
+    imgBox.className = 'imgBox'
+    imgBox.innerHTML = `<a href="${item.dirUrl}\\${item.preview}" target="_blank" ><img src="${item.dirUrl}\\${item.preview}" onload="fun1('${i}')" alt="" srcset=""></a><br><span>${item.dirName}</span>`
+    waitEle.push(imgBox)
+    // bg.appendChild(imgBox)
+  }
+  function fun1(v) {
+    console.log('加载完成', v)
+    bg.appendChild(waitEle[v])
+  }
+  window.onload = function(){
+    console.log('全部加载完成')
+    bg.classList.add('bg-success')
+  }
+</script>
+
+</html>

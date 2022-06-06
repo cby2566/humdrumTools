@@ -4,10 +4,12 @@ export interface successItem {
   fileSize: number;
   dirName: string;
   author: string;
+  preview?: string;
 }
 export interface baseItem {
   dirUrl: string;
   fileSize: number;
   dirName: string;
-  author: string
+  author: string;
+  preview?: string;
 }

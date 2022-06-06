@@ -3,3 +3,6 @@ node_modules/
 successDir.json
 tankDir.json
 translatedGroupFalse.json
+failDir.json
+failDir.txt
+successImg,js

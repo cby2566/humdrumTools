@@ -156,6 +156,8 @@ class HandleTempFile extends tool {
     console.log("提升完成");
   }
 }
+export default HandleTempFile
+
 
 /**
  * 用于梳理菊姬的 作者归档
@@ -164,8 +166,8 @@ class HandleTempFile extends tool {
  */
 
 // 读取(查汉化) 2
-const h1 = new HandleTempFile("./successDir.json");
-h1.readJsonFile();
+// const h1 = new HandleTempFile("./successDir.json");
+// h1.readJsonFile();
 
 // 写入 1
 // const t1 = new tool(`G:\\菊姬plus\\ftl\\06-05`);
