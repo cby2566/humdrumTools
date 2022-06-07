@@ -71,32 +71,24 @@ class Tankobon extends HandleTempFile {
     console.log(`异常信息有： ${this.failDir.length} 条`);
 
     // 写入数组，添加换行符写入文本
-    this.writeFile(this.failDir.join("\n"), "./failDir.txt");
+    this.writeFile(this.failDir.join("\n"), "./log/failDir.txt");
 
     // 写入异常数组对象
     this.writeFileJson(
       JSON.stringify(this.failDirObj, null, "\t"),
-      "./failDir.json"
+      "./log/failDir.json"
     );
 
     // 写入完成数组
     this.writeFileJson(
       JSON.stringify(this.successDir, null, "\t"),
-      "./successDir.json"
+      "./log/successDir.json"
     );
-    const reg1 = "4K";
-    const reg2 = "掃圖組";
-    let you4k = 0;
-    for (let item of this.successDir) {
-      const files = await fsPromises.readdir(item.dirUrl);
-      item.preview = files[0];
-      if (item.dirName.includes(reg1) || item.dirName.includes(reg2)) you4k++;
-    }
-    console.log(`----4k扫图组有${you4k}本`)
+    
     // 写入HTML预读json
     this.writeFileJson(
       `var successImg = ${JSON.stringify(this.successDir, null, "\t")}`,
-      "./successImg.js"
+      "./log/successImg.js"
     );
   }
 
@@ -118,13 +110,26 @@ class Tankobon extends HandleTempFile {
     }
     
   }
+
+  // 判断4k
+  async  is4k() {
+    const reg1 = "4K";
+    const reg2 = "掃圖組";
+    let you4k = 0;
+    for (let item of this.successDir) {
+      const files = await fsPromises.readdir(item.dirUrl);
+      item.preview = files[0];
+      if (item.dirName.includes(reg1) || item.dirName.includes(reg2)) you4k++;
+    }
+    console.log(`----4k扫图组有${you4k}本`)
+  }
 }
 
 // 实例运行
-const t1 = new Tankobon(`G:\\单行本\\2020`);
+const t1 = new Tankobon(`G:\\单行本\\2021\\01`);
 t1.play();
 // 1 读取，并写入json
-t1.threeReadDir(2);
+t1.threeReadDir(1)
 
 
 // 2 处理4k父目录不全

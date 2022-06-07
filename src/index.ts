@@ -112,15 +112,15 @@ class tool {
       return item.fileSize > 80;
     });
     console.log("其中单行本：", tankArr.length);
-    this.writeFileJson(JSON.stringify(tankArr, null, "\t"), "./tankDir.json");
+    this.writeFileJson(JSON.stringify(tankArr, null, "\t"), "./log/tankDir.json");
 
     // 写入数组，添加换行符写入
-    this.writeFile(this.failDir.join("\n"), "./failDir.txt");
+    this.writeFile(this.failDir.join("\n"), "./log/failDir.txt");
 
     // 写入异常数组对象，序列化  +++ 加二三参数使其在文件中也能格式化
     this.writeFileJson(
       JSON.stringify(this.failDirObj, null, "\t"),
-      "./failDir.json"
+      "./log/failDir.json"
     );
 
     // 写入完成数组
