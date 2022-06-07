@@ -99,24 +99,46 @@ class Tankobon extends HandleTempFile {
       "./successImg.js"
     );
   }
+
+  /**
+   * 
+   * 在梳理完成后，补充搜索是否有压缩文件
+   * @param successJsonFileUrl 
+   */
+  async finRarFile(successJsonFileUrl: string){
+    const files = await fsPromises.readFile(successJsonFileUrl, "utf8");
+    const fileJson: baseItem[] = JSON.parse(files);
+    for(let baseItem of fileJson){
+      const benChildFileList = await fsPromises.readdir(baseItem.dirUrl);
+      for(let benChildFile of benChildFileList){
+        if(benChildFile.includes('zip') || benChildFile.includes('rar') || benChildFile.includes('7z')){
+          console.log(benChildFile)
+        }
+      }
+    }
+    
+  }
 }
 
 // 实例运行
-const t1 = new Tankobon(`G:\\单行本\\2019\\07`);
+const t1 = new Tankobon(`G:\\单行本\\2020`);
 t1.play();
 // 1 读取，并写入json
-t1.threeReadDir(1);
+t1.threeReadDir(2);
 
 
 // 2 处理4k父目录不全
 // t1.checkUp("./failDir.json").then(() => {
-//   console.log('刷新写入开始：：')
+//   console.log('-----刷新写入开始：：')
 //   t1.threeReadDir(1);
 // })
 
 
-// 3 重命名 4k扫图组 
+// 3 重命名 移动文件 4k扫图组 
 // t1.collect4k("./successDir.json");
 
 
 // 但是有些其他分类里的，漫画名称不全，暂无法自动校验解决
+
+// 搜压缩包
+// t1.finRarFile("./successDir.json")
