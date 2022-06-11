@@ -64,7 +64,7 @@ class tool {
           dirName,
           author
         };
-        if (isCaricature) {
+        if (isCaricature && dirName.includes('[')) {
           this.successDir.push({
             dirUrl,
             fileSize,

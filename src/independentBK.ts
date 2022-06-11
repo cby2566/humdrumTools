@@ -84,7 +84,7 @@ class Tankobon extends HandleTempFile {
       JSON.stringify(this.successDir, null, "\t"),
       "./log/successDir.json"
     );
-    
+    await this.is4k()
     // 写入HTML预读json
     this.writeFileJson(
       `var successImg = ${JSON.stringify(this.successDir, null, "\t")}`,
@@ -93,26 +93,31 @@ class Tankobon extends HandleTempFile {
   }
 
   /**
-   * 
+   *
    * 在梳理完成后，补充搜索是否有压缩文件
-   * @param successJsonFileUrl 
+   * @param successJsonFileUrl
    */
-  async finRarFile(successJsonFileUrl: string){
+  async finRarFile(successJsonFileUrl: string) {
     const files = await fsPromises.readFile(successJsonFileUrl, "utf8");
     const fileJson: baseItem[] = JSON.parse(files);
-    for(let baseItem of fileJson){
+    for (let baseItem of fileJson) {
       const benChildFileList = await fsPromises.readdir(baseItem.dirUrl);
-      for(let benChildFile of benChildFileList){
-        if(benChildFile.includes('zip') || benChildFile.includes('rar') || benChildFile.includes('7z')){
-          console.log(benChildFile)
+      for (let benChildFile of benChildFileList) {
+        if (
+          benChildFile.includes("zip") ||
+          benChildFile.includes("rar") ||
+          benChildFile.includes("7z")
+        ) {
+          console.log(benChildFile);
         }
       }
     }
-    
   }
 
-  // 判断4k
-  async  is4k() {
+  /**
+   * 判断4k
+   */
+  async is4k() {
     const reg1 = "4K";
     const reg2 = "掃圖組";
     let you4k = 0;
@@ -121,16 +126,26 @@ class Tankobon extends HandleTempFile {
       item.preview = files[0];
       if (item.dirName.includes(reg1) || item.dirName.includes(reg2)) you4k++;
     }
-    console.log(`----4k扫图组有${you4k}本`)
+    console.log(`----4k扫图组有${you4k}本`);
+  }
+
+  async moveAuthor() {
+    const reg1 = "禁漫";
+    let you4k = 0;
+    for (let item of this.successDir) {
+      const files = await fsPromises.readdir(item.dirUrl);
+      item.preview = files[0];
+      if (item.dirUrl.includes(reg1)) you4k++;
+    }
+    console.log(`----禁漫扫图组有${you4k}本`);
   }
 }
 
 // 实例运行
-const t1 = new Tankobon(`G:\\单行本\\2021\\01`);
+const t1 = new Tankobon(`G:\\单行本\\2021`);
 t1.play();
 // 1 读取，并写入json
-t1.threeReadDir(1)
-
+t1.threeReadDir(2)
 
 // 2 处理4k父目录不全
 // t1.checkUp("./failDir.json").then(() => {
@@ -138,10 +153,8 @@ t1.threeReadDir(1)
 //   t1.threeReadDir(1);
 // })
 
-
-// 3 重命名 移动文件 4k扫图组 
+// 3 重命名 移动文件 4k扫图组
 // t1.collect4k("./successDir.json");
-
 
 // 但是有些其他分类里的，漫画名称不全，暂无法自动校验解决
 

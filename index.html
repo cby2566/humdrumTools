@@ -65,6 +65,7 @@
     
     // 去除#符号防止转义
     item.dirUrl = item.dirUrl.replace(/\#/g, '%23')
+    item.dirUrl = item.dirUrl.replace(/\%/g, '%25')
 
     imgBox.innerHTML = `<a href="${item.dirUrl}\\${item.preview}" target="_blank" ><img src="${item.dirUrl}\\${item.preview}" onload="fun1('${i}')" alt="" srcset=""></a><br><span>${item.dirName}</span>`
     waitEle.push(imgBox)
