@@ -84,7 +84,7 @@ class Tankobon extends HandleTempFile {
       JSON.stringify(this.successDir, null, "\t"),
       "./log/successDir.json"
     );
-    await this.is4k()
+    await this.is4k();
     // 写入HTML预读json
     this.writeFileJson(
       `var successImg = ${JSON.stringify(this.successDir, null, "\t")}`,
@@ -121,6 +121,7 @@ class Tankobon extends HandleTempFile {
     const reg1 = "4K";
     const reg2 = "掃圖組";
     let you4k = 0;
+    // 这里是进行了一次 封面图的抽取
     for (let item of this.successDir) {
       const files = await fsPromises.readdir(item.dirUrl);
       item.preview = files[0];
@@ -141,11 +142,11 @@ class Tankobon extends HandleTempFile {
   }
 }
 
-// 实例运行
-const t1 = new Tankobon(`G:\\单行本\\2021`);
-t1.play();
+// 0 实例运行
+// const t1 = new Tankobon(`G:\\单行本\\2022\\05`);
+// t1.play();
 // 1 读取，并写入json
-t1.threeReadDir(2)
+// t1.threeReadDir(1)
 
 // 2 处理4k父目录不全
 // t1.checkUp("./failDir.json").then(() => {
@@ -160,3 +161,5 @@ t1.threeReadDir(2)
 
 // 搜压缩包
 // t1.finRarFile("./successDir.json")
+
+export default Tankobon;
