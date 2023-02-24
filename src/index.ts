@@ -7,7 +7,31 @@ class tool {
   baseUrl: string;
   successDir: Array<baseItem>;
   failDirObj: Array<baseItem>;
-
+  protected static translated: string[] = [
+    "汉化",
+    "漢化",
+    "翻訳",
+    "翻譯",
+    "扫图",
+    "掃圖",
+    "自扫",
+    "个人",
+    "個人",
+    "机翻",
+    "嵌",
+    "翻",
+    "新视界",
+    "新視界",
+    "中文",
+    "CE家族社",
+    "新桥月白",
+    "茜新社",
+    "組",
+    "组",
+    "工房",
+    "pixiv",
+    "Pixiv",
+  ];
   constructor(baseUrl: string = "./") {
     //
     this.baseUrl = baseUrl;
