@@ -143,10 +143,10 @@ class Tankobon extends HandleTempFile {
 }
 
 // 0 实例运行
-// const t1 = new Tankobon(`G:\\单行本\\2022\\05`);
-// t1.play();
+const t1 = new Tankobon(`G:\\单行本\\2021`);
+t1.play();
 // 1 读取，并写入json
-// t1.threeReadDir(1)
+t1.threeReadDir(2) /// 获取全年/YUE的index.html *读取全年需要层级为2 *读取整个月层级为1
 
 // 2 处理4k父目录不全
 // t1.checkUp("./failDir.json").then(() => {

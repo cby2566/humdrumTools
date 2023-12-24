@@ -2,6 +2,7 @@ import * as fsPromises from "fs/promises";
 import { baseItem } from "./itemsType";
 import HandleTempFile from "./index";
 
+// 用于单行本，捕获那些首位名字 有问题的
 class AdvancedTools extends HandleTempFile {
   // private baseUrl: string;
   private static failJsonUrl = "./log/failDir.json";
@@ -36,7 +37,7 @@ class AdvancedTools extends HandleTempFile {
     this.baseUrl = url;
   }
 
-  public async checkIndepentBK(jsonFile: string) {
+  public async checkIndepentBK(jsonFile: string, inside?: boolean) {
     const files = await fsPromises.readFile(jsonFile, "utf8");
     const fileJson: baseItem[] = JSON.parse(files);
 
@@ -66,11 +67,20 @@ class AdvancedTools extends HandleTempFile {
 
     console.log(`首位没有中括号的有 ${noneSymbol.length} 个`);
     console.log(`首位是汉化组的有 ${firstHan.length} 个`);
+    if(inside) {
+      return firstHan
+    }
     this.writeFile(
       Array.prototype.concat(noneSymbol.map(i => i.dirUrl), ["分割"], firstHan.map(i => i.dirUrl)).join("\n"),
       "./log/failDir.txt"
     );
   }
+
+  public async handleName(jsonFile: string){
+    const firstHan =  await this.checkIndepentBK(jsonFile, true);
+    console.log('handleName', firstHan)
+  }
+
   /**
    * 重写父类方法
    * @param depth  层级
@@ -105,4 +115,5 @@ class AdvancedTools extends HandleTempFile {
 const t1 = new AdvancedTools(`G:\\单行本\\2021`);
 t1.play();
 // t1.threeReadDir(2)
-t1.checkIndepentBK("./log/successDir.json");
+// t1.checkIndepentBK("./log/successDir.json");
+t1.handleName("./log/successDir.json");
