@@ -2,7 +2,9 @@ import * as fsPromises from "fs/promises";
 import { baseItem } from "./itemsType";
 import HandleTempFile from "./index";
 
-// 用于单行本，捕获那些首位名字 有问题的
+/**
+ * 用于单行本，捕获那些首位名字 有问题的
+ */
 class AdvancedTools extends HandleTempFile {
   // private baseUrl: string;
   private static failJsonUrl = "./log/failDir.json";
@@ -16,6 +18,9 @@ class AdvancedTools extends HandleTempFile {
   /**
    * 从完成梳理的json里读取，校验那些首位不是作者，或者混乱的name
    * @param jsonFile JSON的路径
+   * @param inside 为true时第一位是汉化组的，不写入log日志直接返回[]
+   * 
+   * @returns 返回 baseItem[]
    */
   public async checkIndepentBK(jsonFile: string, inside?: boolean) {
     const files = await fsPromises.readFile(jsonFile, "utf8");
@@ -56,7 +61,12 @@ class AdvancedTools extends HandleTempFile {
       "./log/failDir.txt"
     );
   }
-
+  /**
+   * 从完成梳理的json里读取
+   * 获取那些错误格式的
+   * @param jsonFile 
+   * 
+   */
   public async handleName(jsonFile: string){
     const firstHan =  await this.checkIndepentBK(jsonFile, true);
     console.log('handleName', firstHan)

@@ -3,7 +3,7 @@ import { baseItem, successItem } from "./itemsType";
 import tool from "./index";
 const path = require("path");
 /**
- * 用于处理且已经处理 以作者为单位的漫画
+ * 用于操作且已经处理 以作者为单位的漫画
  * 并梳理目录层级、使用方法剔除未汉化
  * 辅助手动删除，并溯源返回
  */

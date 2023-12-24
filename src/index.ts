@@ -2,7 +2,11 @@ const path = require("path");
 
 import * as fsPromises from "fs/promises";
 import { baseItem } from "./itemsType";
-
+/**
+ * 最初的工具类：
+ * 用于读取完之后将异常和正常的列表写入JSON，分步操作就可以不用反复读取递归文件目录，而专注于文件名的校验
+ * 获取到了2个JSON文件之后，后续需要的时候直接读取JSON文件就可以了
+ */
 class tool {
   baseUrl: string;
   successDir: Array<baseItem>;
