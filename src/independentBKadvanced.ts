@@ -17,7 +17,7 @@ class AdvancedTools extends HandleTempFile {
    * 从完成梳理的json里读取，校验那些首位不是作者，或者混乱的name
    * @param jsonFile JSON的路径
    */
-  public async checkIndepentBK(jsonFile: string) {
+  public async checkIndepentBK(jsonFile: string, inside?: boolean) {
     const files = await fsPromises.readFile(jsonFile, "utf8");
     const fileJson: baseItem[] = JSON.parse(files);
 
@@ -32,6 +32,7 @@ class AdvancedTools extends HandleTempFile {
         const regs = new RegExp(/\[(.+?)\]/g);
         const searchAuthorList = tItem.dirName.match(regs) || [];
         if (searchAuthorList.length > 0) {
+          // AdvancedTools.translated
           if (
             HandleTempFile.translated.some((t) =>
               searchAuthorList[0].includes(t)
