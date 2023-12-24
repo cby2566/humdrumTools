@@ -7,37 +7,17 @@ class AdvancedTools extends HandleTempFile {
   // private baseUrl: string;
   private static failJsonUrl = "./log/failDir.json";
   private static successJsonUrl = "./log/successDir.json";
-  private static translated: string[] = [
-    "汉化",
-    "漢化",
-    "翻訳",
-    "翻譯",
-    "扫图",
-    "掃圖",
-    "自扫",
-    "个人",
-    "個人",
-    "机翻",
-    "嵌",
-    "翻",
-    "新视界",
-    "新視界",
-    "中文",
-    "CE家族社",
-    "新桥月白",
-    "茜新社",
-    "組",
-    "组",
-    "工房",
-    "pixiv",
-    "Pixiv",
-  ];
+  
   constructor(url: string) {
     super(url);
     this.baseUrl = url;
   }
 
-  public async checkIndepentBK(jsonFile: string, inside?: boolean) {
+  /**
+   * 从完成梳理的json里读取，校验那些首位不是作者，或者混乱的name
+   * @param jsonFile JSON的路径
+   */
+  public async checkIndepentBK(jsonFile: string) {
     const files = await fsPromises.readFile(jsonFile, "utf8");
     const fileJson: baseItem[] = JSON.parse(files);
 
@@ -53,7 +33,7 @@ class AdvancedTools extends HandleTempFile {
         const searchAuthorList = tItem.dirName.match(regs) || [];
         if (searchAuthorList.length > 0) {
           if (
-            AdvancedTools.translated.some((t) =>
+            HandleTempFile.translated.some((t) =>
               searchAuthorList[0].includes(t)
             )
           ) {

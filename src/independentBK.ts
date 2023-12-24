@@ -3,7 +3,9 @@ import HandleTempFile from "./index";
 import { baseItem } from "./itemsType";
 
 const path = require("path");
-
+/**
+ * 用于2018-2019 的单行
+ */
 class Tankobon extends HandleTempFile {
   constructor(baseUrl: string) {
     super(baseUrl);
