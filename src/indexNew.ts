@@ -1,7 +1,11 @@
 import * as fsPromises from "fs/promises";
 import HandleTempFile from "./index";
 import { baseItem } from "./itemsType";
-
+/**
+ * 用于整理new开头的本子合集，导出json文件
+ * 其中掺杂了一些散本/系列合集/单行本
+ * 
+ */
 class IndexNew extends HandleTempFile {
 
   constructor(baseUrl: string) {
